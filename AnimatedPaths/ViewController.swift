@@ -9,8 +9,9 @@
 import UIKit
 import QuartzCore
 import CoreText
+import CoreGraphics
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CAAnimationDelegate {
     
     var animationLayer: CALayer?
     var pathLayer: CAShapeLayer?
@@ -21,7 +22,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         animationLayer = CALayer()
-        animationLayer?.frame = CGRectMake(20.0, 40.0, CGRectGetWidth(self.view.layer.bounds) - 40.0, CGRectGetHeight(self.view.layer.bounds) - 84.0)
+        animationLayer?.frame = CGRect(x: 20.0, y: 40.0, width: self.view.layer.bounds.width - 40.0, height: self.view.layer.bounds.height - 84.0)
         self.view.layer.addSublayer(animationLayer!)
         
         setupDrawingLayer()
@@ -40,9 +41,9 @@ class ViewController: UIViewController {
     func setupPenLayer() {
         let penImage = UIImage(named: "noun_project_347_2")!
         let pensLayer = CALayer()
-        pensLayer.contents = penImage.CGImage
-        pensLayer.anchorPoint = CGPointZero
-        pensLayer.frame = CGRectMake(0.0, 0.0, penImage.size.width, penImage.size.height)
+        pensLayer.contents = penImage.cgImage
+        pensLayer.anchorPoint = CGPoint.zero
+        pensLayer.frame = CGRect(x: 0.0, y: 0.0, width: penImage.size.width, height: penImage.size.height)
         pathLayer?.addSublayer(pensLayer)
         
         penLayer = pensLayer
@@ -54,30 +55,30 @@ class ViewController: UIViewController {
         clearLayer()
         
         if let _ = animationLayer{
-            let pathRect: CGRect = CGRectInset(animationLayer!.bounds, 100.0, 100.0)
-            let bottomLeft = CGPointMake(CGRectGetMinX(pathRect), CGRectGetMinY(pathRect))
-            let topLeft = CGPointMake(CGRectGetMinX(pathRect), CGRectGetMinY(pathRect) + CGRectGetHeight(pathRect) * 2.0 / 3.0)
-            let bottomRight = CGPointMake(CGRectGetMaxX(pathRect), CGRectGetMinY(pathRect))
-            let topRight = CGPointMake(CGRectGetMaxX(pathRect), CGRectGetMinY(pathRect) + CGRectGetHeight(pathRect) * 2.0 / 3.0)
-            let roofTip = CGPointMake(CGRectGetMidX(pathRect), CGRectGetMaxY(pathRect))
+            let pathRect: CGRect = animationLayer!.bounds.insetBy(dx: 100.0, dy: 100.0)
+            let bottomLeft = CGPoint(x: pathRect.minX, y: pathRect.minY)
+            let topLeft = CGPoint(x: pathRect.minX, y: pathRect.minY + pathRect.height * 2.0 / 3.0)
+            let bottomRight = CGPoint(x: pathRect.maxX, y: pathRect.minY)
+            let topRight = CGPoint(x: pathRect.maxX, y: pathRect.minY + pathRect.height * 2.0 / 3.0)
+            let roofTip = CGPoint(x: pathRect.midX, y: pathRect.maxY)
             
             let path = UIBezierPath()
-            path.moveToPoint(bottomLeft)
-            path.addLineToPoint(topLeft)
-            path.addLineToPoint(roofTip)
-            path.addLineToPoint(topRight)
-            path.addLineToPoint(topLeft)
-            path.addLineToPoint(bottomRight)
-            path.addLineToPoint(topRight)
-            path.addLineToPoint(bottomLeft)
-            path.addLineToPoint(bottomRight)
+            path.move(to: bottomLeft)
+            path.addLine(to: topLeft)
+            path.addLine(to: roofTip)
+            path.addLine(to: topRight)
+            path.addLine(to: topLeft)
+            path.addLine(to: bottomRight)
+            path.addLine(to: topRight)
+            path.addLine(to: bottomLeft)
+            path.addLine(to: bottomRight)
             
             let pathShapeLayer = CAShapeLayer()
             pathShapeLayer.frame = animationLayer!.bounds
             pathShapeLayer.bounds = pathRect
-            pathShapeLayer.geometryFlipped = true
-            pathShapeLayer.path = path.CGPath
-            pathShapeLayer.strokeColor = UIColor.blackColor().CGColor
+            pathShapeLayer.isGeometryFlipped = true
+            pathShapeLayer.path = path.cgPath
+            pathShapeLayer.strokeColor = UIColor.black.cgColor
             pathShapeLayer.fillColor = nil
             pathShapeLayer.lineWidth = 10.0
             pathShapeLayer.lineJoin = kCALineJoinBevel
@@ -94,16 +95,16 @@ class ViewController: UIViewController {
     func setupTextLayer() {
         clearLayer()
         
-        let font = CTFontCreateWithName("PingFangSC-Bold", 120, nil)
+        let font = CTFontCreateWithName("PingFangSC-Bold" as CFString?, 120, nil)
         let attrStr = NSAttributedString(string: "Hello Swift!", attributes: [kCTFontAttributeName as String: font])
         let line = CTLineCreateWithAttributedString(attrStr)
         let runArray = CTLineGetGlyphRuns(line)
         
-        let letters = CGPathCreateMutable()
+        let letters = CGMutablePath()
         
         for runIndex in 0..<CFArrayGetCount(runArray) {
-            let runUnsafe: UnsafePointer<Void> = CFArrayGetValueAtIndex(runArray, runIndex) 
-            let run = unsafeBitCast(runUnsafe, CTRunRef.self)
+            let runUnsafe: UnsafeRawPointer = CFArrayGetValueAtIndex(runArray, runIndex) 
+            let run = unsafeBitCast(runUnsafe, to: CTRun.self)
             
             for runGlyphIndex in 0..<CTRunGetGlyphCount(run) {
                 let thisGlyphRange = CFRangeMake(runGlyphIndex, 1)
@@ -113,22 +114,26 @@ class ViewController: UIViewController {
                 CTRunGetPositions(run, thisGlyphRange, &position)
                 
                 let letter = CTFontCreatePathForGlyph(font, glyph, nil)
-                var t = CGAffineTransformMakeTranslation(position.x, position.y);
+                let t = CGAffineTransform(translationX: position.x, y: position.y);
                 
-                CGPathAddPath(letters, &t, letter)
+                if letter == nil {
+                    continue
+                }
+                
+                letters.addPath(letter!, transform:t)
             }
         }
                 
         let path = UIBezierPath()
-        path.moveToPoint(CGPointZero)
-        path.appendPath(UIBezierPath(CGPath: letters))
+        path.move(to: CGPoint.zero)
+        path.append(UIBezierPath(cgPath: letters))
         
         
         let layer = CAShapeLayer()
-        layer.frame = CGRectMake(10, 120, CGRectGetWidth(self.view.layer.bounds) - 20, 100)
-        layer.geometryFlipped = true
-        layer.path = path.CGPath
-        layer.strokeColor = UIColor.redColor().CGColor
+        layer.frame = CGRect(x: 10, y: 120, width: self.view.layer.bounds.width - 20, height: 100)
+        layer.isGeometryFlipped = true
+        layer.path = path.cgPath
+        layer.strokeColor = UIColor.red.cgColor
         layer.fillColor = nil
         layer.lineWidth = 3.0
         layer.lineJoin = kCALineJoinBevel
@@ -144,25 +149,27 @@ class ViewController: UIViewController {
         penLayer?.removeAllAnimations()
         pathLayer?.removeAllAnimations()
         
-        penLayer?.hidden = false
+        penLayer?.isHidden = false
         
         let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
         pathAnimation.duration = 10.0
         pathAnimation.fromValue = 0.0
         pathAnimation.toValue = 1.0
-        pathLayer?.addAnimation(pathAnimation, forKey: "strokeEnd")
+        pathLayer?.add(pathAnimation, forKey: "strokeEnd")
         
         let penAnimation = CAKeyframeAnimation(keyPath: "position")
         penAnimation.duration = 10.0
         penAnimation.path = pathLayer?.path
         penAnimation.calculationMode = kCAAnimationPaced
         penAnimation.delegate = self
-        penLayer?.addAnimation(penAnimation, forKey: "position")
+        penLayer?.add(penAnimation, forKey: "position")
     }
     
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        penLayer?.hidden = true
+    
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool){
+         penLayer?.isHidden = true
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -170,11 +177,11 @@ class ViewController: UIViewController {
     }
  
     
-    @IBAction func replayAction(sender: AnyObject) {
+    @IBAction func replayAction(_ sender: AnyObject) {
         startAnimation()
     }
 
-    @IBAction func drawingTypeSelector(sender: AnyObject) {
+    @IBAction func drawingTypeSelector(_ sender: AnyObject) {
         
         switch sender.selectedSegmentIndex {
         case 0:

@@ -12,7 +12,6 @@
 		00B2997A1C7C413400521D96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B299781C7C413400521D96 /* Main.storyboard */; };
 		00B2997C1C7C413400521D96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B2997B1C7C413400521D96 /* Assets.xcassets */; };
 		00B2997F1C7C413400521D96 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B2997D1C7C413400521D96 /* LaunchScreen.storyboard */; };
-		00B299871C7C415D00521D96 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B299861C7C415D00521D96 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +22,6 @@
 		00B2997B1C7C413400521D96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00B2997E1C7C413400521D96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00B299801C7C413400521D96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00B299861C7C415D00521D96 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,7 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00B299871C7C415D00521D96 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,7 +38,6 @@
 		00B299681C7C413400521D96 = {
 			isa = PBXGroup;
 			children = (
-				00B299861C7C415D00521D96 /* QuartzCore.framework */,
 				00B299731C7C413400521D96 /* AnimatedPaths */,
 				00B299721C7C413400521D96 /* Products */,
 			);
@@ -100,6 +96,9 @@
 				TargetAttributes = {
 					00B299701C7C413400521D96 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = W7YDEDGW4E;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -253,10 +252,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = W7YDEDGW4E;
 				INFOPLIST_FILE = AnimatedPaths/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mRocker.AnimatedPaths;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robin.AnimatedPaths;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3a51cda8-3387-4c26-a945-c8fb51508664";
+				PROVISIONING_PROFILE_SPECIFIER = "Development: Wildcard";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -264,10 +267,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = W7YDEDGW4E;
 				INFOPLIST_FILE = AnimatedPaths/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mRocker.AnimatedPaths;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Robin.AnimatedPaths;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3a51cda8-3387-4c26-a945-c8fb51508664";
+				PROVISIONING_PROFILE_SPECIFIER = "Development: Wildcard";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -290,6 +297,7 @@
 				00B299851C7C413400521D96 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

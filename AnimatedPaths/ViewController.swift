@@ -92,19 +92,21 @@ class ViewController: UIViewController, CAAnimationDelegate {
     }
     
     
+    
     func setupTextLayer() {
-        clearLayer()
-        
-        let font = CTFontCreateWithName("PingFangSC-Bold" as CFString?, 120, nil)
-        let attrStr = NSAttributedString(string: "Hello Swift!", attributes: [kCTFontAttributeName as String: font])
+        clearLayer() 
+
+        let font = CTFontCreateWithName("STHeitiSC-Light" as CFString, 120, nil)
+        let attrStr = NSAttributedString(string: "你好Swift", attributes: [kCTFontAttributeName as String: font])
         let line = CTLineCreateWithAttributedString(attrStr)
         let runArray = CTLineGetGlyphRuns(line)
         
         let letters = CGMutablePath()
         
         for runIndex in 0..<CFArrayGetCount(runArray) {
-            let runUnsafe: UnsafeRawPointer = CFArrayGetValueAtIndex(runArray, runIndex) 
+            let runUnsafe: UnsafeRawPointer = CFArrayGetValueAtIndex(runArray, runIndex)
             let run = unsafeBitCast(runUnsafe, to: CTRun.self)
+
             
             for runGlyphIndex in 0..<CTRunGetGlyphCount(run) {
                 let thisGlyphRange = CFRangeMake(runGlyphIndex, 1)
@@ -116,14 +118,10 @@ class ViewController: UIViewController, CAAnimationDelegate {
                 let letter = CTFontCreatePathForGlyph(font, glyph, nil)
                 let t = CGAffineTransform(translationX: position.x, y: position.y);
                 
-                if letter == nil {
-                    continue
-                }
-                
                 letters.addPath(letter!, transform:t)
             }
         }
-                
+        
         let path = UIBezierPath()
         path.move(to: CGPoint.zero)
         path.append(UIBezierPath(cgPath: letters))

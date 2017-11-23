@@ -47,8 +47,4 @@ RCAnimatedPath.shared.drawAnimatedCustomPath(in: targetView,
                                                          lineWidth: 2,
                                                          lineColor: UIColor.black)
 ```
-
-            
-The demo:
-
-![](Imgs/demo.gif)
+ 

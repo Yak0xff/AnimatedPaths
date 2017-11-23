@@ -13,24 +13,14 @@ import CoreGraphics
 
 
 
-class RCAnimatedPath
-{
-    ////////////////////////
-    // CREATE A SINGLETON //
+class RCAnimatedPath{
     
-    class var shared: RCAnimatedPath
-    {
-        struct Singleton
-        {
+    class var shared: RCAnimatedPath{
+        struct Singleton{
             static let instance = RCAnimatedPath()
         }
         return Singleton.instance
     }
-    
-    // CREATE A SINGLETON //
-    ////////////////////////
-    
-    
     
     var animationLayer: CALayer?
     var pathLayer: CAShapeLayer?
@@ -50,15 +40,13 @@ class RCAnimatedPath
     
 
     
-    func drawAnimatedCustomPath(in view: UIView, path: CGPath, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor)
-    {
+    func drawAnimatedCustomPath(in view: UIView, path: CGPath, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
         self.inputPath = path
         
         animationLayer = CALayer()
-        
         animationLayer?.frame = CGRect(x: 0, y: 0, width: view.layer.bounds.width, height: view.layer.bounds.height)
         view.layer.addSublayer(animationLayer!)
         view.clipsToBounds = true
@@ -67,8 +55,7 @@ class RCAnimatedPath
         startAnimation()
     }
     
-    func drawAnimatedRectanglePath(in view: UIView, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor)
-    {
+    func drawAnimatedRectanglePath(in view: UIView, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
@@ -85,8 +72,7 @@ class RCAnimatedPath
         startAnimation()
     }
     
-    func drawAnimatedPolygonPath(in view: UIView, numberOfSides polygonSidesNumber: Int?, rotationAngle: CGFloat?, polygonCornerRadius: Float?, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor)
-    {
+    func drawAnimatedPolygonPath(in view: UIView, numberOfSides polygonSidesNumber: Int?, rotationAngle: CGFloat?, polygonCornerRadius: Float?, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
@@ -114,8 +100,7 @@ class RCAnimatedPath
         startAnimation()
     }
     
-    func drawAnimatedText(in view: UIView, with text: String, duration: CFTimeInterval, lineWidth: CGFloat, textColor: UIColor, fontName: String?, fontSize: CGFloat?)
-    {
+    func drawAnimatedText(in view: UIView, with text: String, duration: CFTimeInterval, lineWidth: CGFloat, textColor: UIColor, fontName: String?, fontSize: CGFloat?){
         self.inputText = text
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
@@ -138,14 +123,12 @@ class RCAnimatedPath
     }
     
     
-    func setupDrawingLayer()
-    {
+    func setupDrawingLayer(){
         clearLayer()
         
         if let _ = animationLayer
         {
-            let pathRect: CGRect = animationLayer!.bounds
-            
+            let pathRect: CGRect = animationLayer!.bounds.insetBy(dx: 100.0, dy: 100.0)
             
             let pathShapeLayer = CAShapeLayer()
             pathShapeLayer.frame = animationLayer!.bounds
@@ -163,8 +146,7 @@ class RCAnimatedPath
         }
     }
     
-    func setupTextLayer(in view: UIView)
-    {
+    func setupTextLayer(in view: UIView){
         clearLayer()
         
         if let _ = animationLayer
@@ -219,20 +201,34 @@ class RCAnimatedPath
         
     }
     
-    private func startAnimation()
-    {
+    private func startAnimation(){
         pathLayer?.removeAllAnimations()
         
-        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        pathAnimation.duration = inputDuration
-        pathAnimation.fromValue = 0.0
-        pathAnimation.toValue = 1.0
-        pathLayer?.add(pathAnimation, forKey: "strokeEnd")
+//        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
+//        pathAnimation.duration = inputDuration
+//        pathAnimation.fromValue = 0.0
+//        pathAnimation.toValue = 1.0
+//        pathLayer?.add(pathAnimation, forKey: "strokeEnd")
+        
+        
+        
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        
+        animation.fromValue = 0.0
+        animation.byValue = 1.0
+        animation.toValue = 1.0
+        animation.duration = inputDuration
+        
+        animation.fillMode = kCAFillModeForwards
+        animation.isRemovedOnCompletion = false
+        
+        pathLayer?.add(animation, forKey: "drawLineAnimation")
+
+        
     }
     
         //freezes the animation until clearLayer() is called
-    func stopAnimatingWithPause()
-    {
+    func stopAnimatingWithPause(){
         if let pausedTime = pathLayer?.convertTime(CACurrentMediaTime(), from: nil)
         {
             pathLayer?.speed = 0.0
@@ -241,13 +237,11 @@ class RCAnimatedPath
     }
     
         //clears the animation layers
-    func stopAnimatingWithClear()
-    {
+    func stopAnimatingWithClear(){
         clearLayer()
     }
     
-    func clearLayer()
-    {
+    func clearLayer(){
         if let _ = pathLayer
         {
             pathLayer?.removeFromSuperlayer()
@@ -255,11 +249,7 @@ class RCAnimatedPath
         }
     }
     
-    
-    /// CREATE PATH ///
-    
-    private func rectanglePath(view: UIView) -> CGPath
-    {
+    private func rectanglePath(view: UIView) -> CGPath{
             //start point - left-down corner
         var point = CGPoint(x: inputLineWidth/2, y: 0)
         let path = UIBezierPath()
@@ -285,8 +275,7 @@ class RCAnimatedPath
         return path.cgPath
     }
     
-    private func polygonPath(view: UIView) -> CGPath
-    {
+    private func polygonPath(view: UIView) -> CGPath{
         let path = UIBezierPath()
         
         let theta = Float(2.0 * .pi) / Float(inputPolygonSidesNumber)
@@ -295,8 +284,7 @@ class RCAnimatedPath
         
         var length = squareWidth - Float(inputLineWidth)
         
-        if inputPolygonSidesNumber % 4 != 0
-        {
+        if inputPolygonSidesNumber % 4 != 0{
             length = length * cosf(theta / 2.0) + offset / 2.0
         }
         
@@ -306,8 +294,7 @@ class RCAnimatedPath
         var angle = Float(Double.pi)
         path.move(to: point)
         
-        for _ in 0 ..< inputPolygonSidesNumber
-        {
+        for _ in 0 ..< inputPolygonSidesNumber{
             
             let x = Float(point.x) + (sideLength - offset * 2.0) * cosf(angle)
             let y = Float(point.y) + (sideLength - offset * 2.0) * sinf(angle)

@@ -21,12 +21,25 @@ class ViewController: UIViewController, CAAnimationDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        animationLayer = CALayer()
-        animationLayer?.frame = CGRect(x: 20.0, y: 40.0, width: self.view.layer.bounds.width - 40.0, height: self.view.layer.bounds.height - 84.0)
-        self.view.layer.addSublayer(animationLayer!)
+        let targetView: UIView = self.view
         
-        setupDrawingLayer()
-        startAnimation()
+        RCAnimatedPath().drawAnimatedRectanglePath(in: targetView, duration: 10, lineWidth: 20, lineColor: UIColor.red)
+
+        RCAnimatedPath().drawAnimatedPolygonPath(in: targetView, numberOfSides: 8, rotationAngle: 30, polygonCornerRadius: 8, duration: 10, lineWidth: 5, lineColor: UIColor.gray)
+
+        RCAnimatedPath().drawAnimatedText(in: targetView, with: "K E G", duration: 10, lineWidth: 2, textColor: UIColor.blue, fontName: "anyFontName", fontSize: 50)
+
+//        RCAnimatedPath().drawAnimatedCustomPath(in: targetView, path: myPath, duration: 15, lineWidth: 5, lineColor: UIColor.blue)
+
+        RCAnimatedPath.shared.drawAnimatedRectanglePath(in: targetView, duration: 10, lineWidth: 20, lineColor: UIColor.red)
+
+        
+//        animationLayer = CALayer()
+//        animationLayer?.frame = CGRect(x: 20.0, y: 40.0, width: self.view.layer.bounds.width - 40.0, height: self.view.layer.bounds.height - 84.0)
+//        self.view.layer.addSublayer(animationLayer!)
+//
+//        setupDrawingLayer()
+//        startAnimation()
     }
     
     func clearLayer() {
@@ -96,8 +109,8 @@ class ViewController: UIViewController, CAAnimationDelegate {
     func setupTextLayer() {
         clearLayer() 
 
-        let font = CTFontCreateWithName("STHeitiSC-Light" as CFString, 120, nil)
-        let attrStr = NSAttributedString(string: "你好Swift", attributes: [kCTFontAttributeName as String: font])
+        let font = CTFontCreateWithName("PingFangSC-Light" as CFString, 120, nil)
+        let attrStr = NSAttributedString(string: "Hello Swift", attributes: [kCTFontAttributeName as String: font])
         let line = CTLineCreateWithAttributedString(attrStr)
         let runArray = CTLineGetGlyphRuns(line)
         

@@ -30,13 +30,32 @@ class ViewController: UIViewController {
         
         switch sender.selectedSegmentIndex {
         case 0:
-            RCAnimatedPath.shared.drawAnimatedRectanglePath(in: targetView, duration: 3, lineWidth: 5, lineColor: UIColor.red)
+            RCAnimatedPath.shared.drawAnimatedRectanglePath(in: targetView,
+                                                            duration: 3,
+                                                            lineWidth: 5,
+                                                            lineColor: UIColor.red)
         case 1:
-            RCAnimatedPath.shared.drawAnimatedPolygonPath(in: targetView, numberOfSides: 8, rotationAngle: 10, polygonCornerRadius: 4, duration: 3, lineWidth: 5, lineColor: UIColor.gray)
+            RCAnimatedPath.shared.drawAnimatedPolygonPath(in: targetView,
+                                                          numberOfSides: 8,
+                                                          rotationAngle: 10,
+                                                          polygonCornerRadius: 4,
+                                                          duration: 3,
+                                                          lineWidth: 5,
+                                                          lineColor: UIColor.gray)
         case 2:
-            RCAnimatedPath.shared.drawAnimatedText(in: targetView, with: "Hello Swift!", duration: 3, lineWidth: 2, textColor: UIColor.blue, fontName: "PingFangSC-Bold", fontSize: 50)
+            RCAnimatedPath.shared.drawAnimatedText(in: targetView,
+                                                   with: "Hello Swift!",
+                                                   duration: 3,
+                                                   lineWidth: 2,
+                                                   textColor: UIColor.blue,
+                                                   fontName: "PingFangSC-Bold",
+                                                   fontSize: 50)
         case 3:
-            RCAnimatedPath.shared.drawAnimatedCustomPath(in: targetView, path: ringPath.cgPath, duration: 3, lineWidth: 2, lineColor: UIColor.black)
+            RCAnimatedPath.shared.drawAnimatedCustomPath(in: targetView,
+                                                         path: ringPath.cgPath,
+                                                         duration: 3,
+                                                         lineWidth: 2,
+                                                         lineColor: UIColor.black)
         default:
             break
         }

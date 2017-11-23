@@ -49,3 +49,6 @@ RCAnimatedPath.shared.drawAnimatedCustomPath(in: targetView,
 ```
 
             
+The demo:
+
+![](Imgs/demo.gif)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		009F0CBC1FC67E060096B0E3 /* RCAnimatedPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009F0CBB1FC67E060096B0E3 /* RCAnimatedPath.swift */; };
 		00B299751C7C413400521D96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B299741C7C413400521D96 /* AppDelegate.swift */; };
 		00B299771C7C413400521D96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B299761C7C413400521D96 /* ViewController.swift */; };
 		00B2997A1C7C413400521D96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B299781C7C413400521D96 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		009F0CBB1FC67E060096B0E3 /* RCAnimatedPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCAnimatedPath.swift; sourceTree = "<group>"; };
 		00B299711C7C413400521D96 /* AnimatedPaths.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimatedPaths.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B299741C7C413400521D96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00B299761C7C413400521D96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				00B299741C7C413400521D96 /* AppDelegate.swift */,
+				009F0CBB1FC67E060096B0E3 /* RCAnimatedPath.swift */,
 				00B299761C7C413400521D96 /* ViewController.swift */,
 				00B299781C7C413400521D96 /* Main.storyboard */,
 				00B2997B1C7C413400521D96 /* Assets.xcassets */,
@@ -98,7 +101,7 @@
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = W7YDEDGW4E;
 						LastSwiftMigration = 0820;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -140,6 +143,7 @@
 			files = (
 				00B299771C7C413400521D96 /* ViewController.swift in Sources */,
 				00B299751C7C413400521D96 /* AppDelegate.swift in Sources */,
+				009F0CBC1FC67E060096B0E3 /* RCAnimatedPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,14 +256,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = W7YDEDGW4E;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = AnimatedPaths/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Robin.AnimatedPaths;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3a51cda8-3387-4c26-a945-c8fb51508664";
-				PROVISIONING_PROFILE_SPECIFIER = "Development: Wildcard";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -269,14 +275,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = W7YDEDGW4E;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = AnimatedPaths/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Robin.AnimatedPaths;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3a51cda8-3387-4c26-a945-c8fb51508664";
-				PROVISIONING_PROFILE_SPECIFIER = "Development: Wildcard";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

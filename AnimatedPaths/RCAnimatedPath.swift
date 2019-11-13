@@ -40,7 +40,11 @@ class RCAnimatedPath{
     
 
     
-    func drawAnimatedCustomPath(in view: UIView, path: CGPath, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
+    func drawAnimatedCustomPath(in view: UIView,
+                                path: CGPath,
+                                duration: CFTimeInterval,
+                                lineWidth: CGFloat,
+                                lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
@@ -55,7 +59,10 @@ class RCAnimatedPath{
         startAnimation()
     }
     
-    func drawAnimatedRectanglePath(in view: UIView, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
+    func drawAnimatedRectanglePath(in view: UIView,
+                                   duration: CFTimeInterval,
+                                   lineWidth: CGFloat,
+                                   lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
@@ -72,7 +79,13 @@ class RCAnimatedPath{
         startAnimation()
     }
     
-    func drawAnimatedPolygonPath(in view: UIView, numberOfSides polygonSidesNumber: Int?, rotationAngle: CGFloat?, polygonCornerRadius: Float?, duration: CFTimeInterval, lineWidth: CGFloat, lineColor: UIColor){
+    func drawAnimatedPolygonPath(in view: UIView,
+                                 numberOfSides polygonSidesNumber: Int?,
+                                 rotationAngle: CGFloat?,
+                                 polygonCornerRadius: Float?,
+                                 duration: CFTimeInterval,
+                                 lineWidth: CGFloat,
+                                 lineColor: UIColor){
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
         self.inputLineColor = lineColor
@@ -100,7 +113,13 @@ class RCAnimatedPath{
         startAnimation()
     }
     
-    func drawAnimatedText(in view: UIView, with text: String, duration: CFTimeInterval, lineWidth: CGFloat, textColor: UIColor, fontName: String?, fontSize: CGFloat?){
+    func drawAnimatedText(in view: UIView,
+                          with text: String,
+                          duration: CFTimeInterval,
+                          lineWidth: CGFloat,
+                          textColor: UIColor,
+                          fontName: String?,
+                          fontSize: CGFloat?){
         self.inputText = text
         self.inputDuration = duration
         self.inputLineWidth = lineWidth
@@ -138,7 +157,7 @@ class RCAnimatedPath{
             pathShapeLayer.strokeColor = inputLineColor.cgColor
             pathShapeLayer.fillColor = nil
             pathShapeLayer.lineWidth = inputLineWidth
-            pathShapeLayer.lineJoin = kCALineJoinBevel
+            pathShapeLayer.lineJoin = CAShapeLayerLineJoin.bevel
             
             animationLayer!.addSublayer(pathShapeLayer)
             
@@ -151,8 +170,8 @@ class RCAnimatedPath{
         
         if let _ = animationLayer
         {
-            let font = CTFontCreateWithName(inputFontName as CFString?, inputFontSize, nil)
-            let attrStr = NSAttributedString(string: inputText, attributes: [kCTFontAttributeName as String: font])
+            let font = CTFontCreateWithName((inputFontName as CFString?)!, inputFontSize, nil)
+            let attrStr = NSAttributedString(string: inputText, attributes: [kCTFontAttributeName as NSAttributedString.Key: font])
             let line = CTLineCreateWithAttributedString(attrStr)
             let runArray = CTLineGetGlyphRuns(line)
             
@@ -192,7 +211,7 @@ class RCAnimatedPath{
             layer.strokeColor = inputLineColor.cgColor
             layer.fillColor = nil
             layer.lineWidth = inputLineWidth
-            layer.lineJoin = kCALineJoinBevel
+            layer.lineJoin = CAShapeLayerLineJoin.bevel
             
             animationLayer!.addSublayer(layer)
             
@@ -203,15 +222,6 @@ class RCAnimatedPath{
     
     private func startAnimation(){
         pathLayer?.removeAllAnimations()
-        
-//        let pathAnimation = CABasicAnimation(keyPath: "strokeEnd")
-//        pathAnimation.duration = inputDuration
-//        pathAnimation.fromValue = 0.0
-//        pathAnimation.toValue = 1.0
-//        pathLayer?.add(pathAnimation, forKey: "strokeEnd")
-        
-        
-        
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         
         animation.fromValue = 0.0
@@ -219,7 +229,7 @@ class RCAnimatedPath{
         animation.toValue = 1.0
         animation.duration = inputDuration
         
-        animation.fillMode = kCAFillModeForwards
+        animation.fillMode = CAMediaTimingFillMode.forwards
         animation.isRemovedOnCompletion = false
         
         pathLayer?.add(animation, forKey: "drawLineAnimation")
